@@ -56,7 +56,7 @@ $payload = [
 ];
 
 //generate access token
-$access_token = JWT::encode($payload, $_ENV['ACCESS_SECRET_TOKEN'], false);
+$access_token = JWT::encode($payload, $_ENV['ACCESS_SECRET_TOKEN'], 'HS256');
 
 //json response
 echo json_encode([
@@ -67,7 +67,7 @@ echo json_encode([
 
 //change expire time additional time 1 hour
 $payload['exp'] = time() + (60 * 60);
-$refresh_token = JWT::encode($payload, $_ENV['REFRESH_SECRET_TOKEN'], false);
+$refresh_token = JWT::encode($payload, $_ENV['REFRESH_SECRET_TOKEN'], 'HS256');
 
 //save refresh token in http-only cookie
 setcookie('refreshToken', $refresh_token, $payload['exp'], '', '', false, true);
