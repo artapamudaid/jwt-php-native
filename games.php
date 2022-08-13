@@ -3,6 +3,7 @@
 require_once('vendor/autoload.php');
 //import library
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -30,7 +31,8 @@ list(, $token) = explode(' ', $headers['Authorization']);
 
 try {
     //decode token and verify
-    JWT::decode($token, $_ENV['ACCESS_SECRET_TOKEN'], ['HS256']);
+    JWT::decode($token, new Key($_ENV['ACCESS_SECRET_TOKEN'], 'HS256'));
+
     //get data if token is valid
     $games = [
         [
@@ -45,6 +47,13 @@ try {
     echo json_encode($games);
 } catch (Exception $e) {
     //if error
+    echo json_encode(
+        [
+            'success' => 'false',
+            'data'    => null,
+            'message' => 'Invalid Token',
+        ]
+    );
     http_response_code(401);
     exit();
 }
