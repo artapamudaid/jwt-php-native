@@ -31,7 +31,7 @@ if (!isset($input->email) || !isset($input->password)) {
 
 //user data (for example)
 $user = [
-    'email' => 'johndoe@mail.com',
+    'email' => 'arta@mail.com',
     'password' => 'rahasia123'
 ];
 
